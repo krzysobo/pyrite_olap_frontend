@@ -1,0 +1,57 @@
+<div class="main-container">
+    <div class="main-left">
+        <mat-card style="height: 100%; border: 1px solid red;">
+            <mat-card-title style="padding: 10px;">Cubes</mat-card-title>
+            <mat-card-content style="padding-left: 0; padding-right: 0">
+                <mat-accordion class="example-headers-align" multi>
+                    <ng-template ngFor let-data [ngForOf]="cubes_list">
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title (click)="expand_cube_info(data.name)"> {{ data.label }} </mat-panel-title>
+                                <mat-panel-description>                                    
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+                            <div class="cd-container">
+                                <div>Label:</div>
+                                <div>{{ data.label }}</div>
+
+                                <div>Name:</div>
+                                <div>{{ data.name }}</div>
+
+                                <div>Category:</div>
+                                <div>{{ data.category }}</div>
+
+                                <div>Info:</div>
+                                <div>info info info</div>
+                            </div>
+                        </mat-expansion-panel>
+                    </ng-template>
+                </mat-accordion>
+            </mat-card-content>
+        </mat-card>
+
+    </div>
+
+    <div class="main-content">
+        <p>Pyrite (Cubes Anew) - Home. Expanded cube: {{ expanded_cube_name }}</p>
+
+        <ng-template [ngIf]="(expanded_cube_name != null && expanded_cube_name != '')">
+            
+            <mat-tab-group animationDuration="0ms">
+                <mat-tab label="[{{ expanded_cube_name }}] - model">
+                    Content 1
+                </mat-tab>
+
+                <mat-tab label="[{{ expanded_cube_name }}] - raw facts">
+                    raw facts raw facts raw facts
+                </mat-tab>
+
+                <mat-tab label="[{{ expanded_cube_name }}] - cubed data">
+                    data data data cubed data
+                </mat-tab>
+            </mat-tab-group>
+        </ng-template>
+          
+    </div>
+
+</div>
