@@ -1,0 +1,14 @@
+<mat-card class="aggregates-card">
+    <mat-card-title>Total aggregates</mat-card-title>
+    <mat-card-content>
+        <div class="aggregate-summary-grid">
+            <ng-container *ngFor="let agg of aggregate_service.aggregates; let i = index">
+                <div><b>{{ agg }}</b></div>
+                <div *ngIf="(aggregate_service.get_summary_for_agg(agg) != ''); else noSummaryBl" >{{ aggregate_service.get_summary_for_agg(agg) }}</div>
+                <ng-template #noSummaryBl>
+                    <div> -- </div>
+                </ng-template>
+            </ng-container>
+        </div>
+    </mat-card-content>
+</mat-card>

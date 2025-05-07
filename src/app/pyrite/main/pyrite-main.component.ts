@@ -4,54 +4,26 @@ import { MatTableDataSource } from '@angular/material/table';
 import { AfterViewInit, ViewChild } from '@angular/core';
 
 // table imports
-import { MatPaginator, MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
-import { MatSort, MatSortModule } from '@angular/material/sort';
-import { FactTableService } from '../_utils/services/fact-table-service';
-import { AggregateService } from '../_utils/services/aggregate-service';
-
-class Chd extends ChangeDetectorRef {
-  markForCheck(): void { }
-  detach(): void { }
-  detectChanges(): void { }
-  checkNoChanges(): void { }
-  reattach(): void { }
-}
-
-
+import { AggregatesComponent } from './sub/aggregates/aggregates.component';
+import { FactsComponent } from './sub/facts/facts.component';
 
 
 @Component({
   selector: 'app-pyrite-main',
   standalone: false,
   templateUrl: './pyrite-main.component.html',
-  styleUrl: './pyrite-main.component.scss'
+  styleUrl: './pyrite-main.component.scss',
+  providers: [AggregatesComponent, FactsComponent],
 })
 export class PyriteMainComponent implements OnInit, OnDestroy {
   private _cubes: any[] = [];
   private _expanded_cube_name: string = "";
   private _expanded_cube_model: any = null;
-  private _expanded_cube_aggregates: any = null;
-  private _expanded_cube_facts: any = null;
-  _facts_data_source: MatTableDataSource<any> = <MatTableDataSource<any>>{};
-  // https://stackoverflow.com/questions/67043781/angular-material-pagination-and-sorting-issue
-  @ViewChild(MatPaginator) facts_paginator: MatPaginator = new MatPaginator(
-    new MatPaginatorIntl(), new Chd());
-  @ViewChild(MatSort) facts_sort: MatSort = new MatSort();
-
 
   constructor(
-    private cubeService: CubeService,
-    private factTableService: FactTableService,
-    private aggregateService: AggregateService) {
-    this.init_facts_data_source([]);
-  }
-
-
-  init_facts_data_source(items: any) {
-    this.factTableService.init_data_source(items);
-    this._facts_data_source = new MatTableDataSource(this.factTableService.items);
-    this._facts_data_source.paginator = this.facts_paginator;
-    this._facts_data_source.sort = this.facts_sort;
+    private aggregatesComponent: AggregatesComponent,
+    private factsComponent: FactsComponent,
+    private cubeService: CubeService) {
   }
 
   get cubes_list() {
@@ -66,21 +38,13 @@ export class PyriteMainComponent implements OnInit, OnDestroy {
     return this._expanded_cube_model;
   }
 
-  get expanded_cube_aggregates() {
-    return this._expanded_cube_aggregates;
-  }
+  // get facts_data_rows() {
+  //   return this.factsComponent.facts_data_rows;
+  // }
 
-  get expanded_cube_facts() {
-    return this._expanded_cube_facts;
-  }
-
-  get facts_data_rows() {
-    return this._facts_data_source;
-  }
-
-  get facts_data_cols() {
-    return this.factTableService.columns;
-  }
+  // get facts_data_cols() {
+  //   return this.factsComponent.facts_data_cols;
+  // }
 
 
   expand_cube_info(cube_name: string) {
@@ -105,8 +69,7 @@ export class PyriteMainComponent implements OnInit, OnDestroy {
     this.cubeService.get_cube_aggregate(cube_name, aggregate_params).subscribe({
       next: (resp: any) => {
         console.log("== get_cube_aggregate - cube aggregates for " + cube_name, resp);
-        this._expanded_cube_aggregates = resp.body;
-        this.aggregateService.init_aggregate_data_from_endpoint(this._expanded_cube_aggregates);
+        this.aggregatesComponent.init_aggregate_data_from_endpoint(resp.body);
       },
       error: (resp) => {
         console.log("== get_cube_aggregate - ERRORS", resp);
@@ -117,8 +80,7 @@ export class PyriteMainComponent implements OnInit, OnDestroy {
     this.cubeService.get_cube_facts(cube_name, facts_params).subscribe({
       next: (resp: any) => {
         console.log("== get_cube_facts - cube facts for " + cube_name, resp);
-        this._expanded_cube_facts = resp.body;
-        this.init_facts_data_source(this._expanded_cube_facts);
+        this.factsComponent.init_facts_data_source(resp.body);
       },
       error: (resp) => {
         console.log("== get_cube_facts - ERRORS", resp);
@@ -158,8 +120,5 @@ export class PyriteMainComponent implements OnInit, OnDestroy {
 
   }
 
-
-  // ngOn
-  // this._profile = this.userStateService.get_current_user();
-
 }
+
