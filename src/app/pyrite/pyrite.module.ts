@@ -10,7 +10,7 @@ import { RouterLink, RouterLinkActive } from "@angular/router";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatSortModule } from "@angular/material/sort";
-import { MatTableModule } from "@angular/material/table";
+import { MatTableModule, MatTableDataSource  } from "@angular/material/table";
 import { MatDialog, MatDialogModule } from "@angular/material/dialog";
 import {MatTabsModule} from '@angular/material/tabs';
 
@@ -30,13 +30,14 @@ import {MatAccordion, MatExpansionModule} from '@angular/material/expansion';
         RouterLink, 
         RouterLinkActive,
         MatFormFieldModule, 
-        MatTableModule, 
         MatSortModule, 
         MatPaginatorModule, 
         MatDialogModule,
         MatExpansionModule, 
         MatAccordion,
         MatTabsModule,
+        MatTableModule, 
+        // MatTableDataSource,
     ],
 
     declarations: [
