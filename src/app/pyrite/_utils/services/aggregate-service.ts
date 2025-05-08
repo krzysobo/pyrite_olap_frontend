@@ -35,6 +35,16 @@ export class AggregateService {
     return this._aggregate_data.levels;
   }
   
+  get levels_list() {
+    var res: any = [];
+    for(var lvl_name in this._aggregate_data.levels) {
+      var item = [lvl_name, this._aggregate_data.levels[lvl_name]];
+      res.push(item);
+    }
+
+    return res;
+  }
+
   get cells() {
     return this._aggregate_data.cells;
   }

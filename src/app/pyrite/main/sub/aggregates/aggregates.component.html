@@ -21,10 +21,17 @@
                             <mat-label>Query aggregates eg. drilldown=year|item&cut=item:a</mat-label>
                             <textarea matInput formControlName="agg_query" rows="5" cols="130"></textarea>
                         </mat-form-field>
+                        <div *ngIf="aggregate_query_error" class="error_field">
+                            <b>Error:</b> {{ aggregate_query_error }}
+                        </div>
                         <div class="field-hint">
                             For example:<br />
                             <span><strong><u>drilldown=year|item&cut=item:a</u></strong></span><br />
-                            <span><strong><u>drilldown=year|item&cut=item:e|year:2010</u></strong><br /></span>
+                            <span><strong><u>drilldown=year|item&cut=item:e|year:2010</u></strong></span><br />
+                            <span><strong><u>drilldown=year|item:subcategory&cut=year:2009</u></strong></span><br />
+                            <span><strong><u>drilldown=year|item:subcategory</u></strong></span><br />
+                            <span><strong><u>drilldown=year|item:subcategory&cut=item:a|year:2009</u></strong></span><br />
+                            <span><strong><u>drilldown=year|item:category&cut=item:a|year:2009</u></strong></span><br />
                         </div>
                     </div>
                     <div>
@@ -36,9 +43,9 @@
 
         <ng-template [ngIf]="cells_total_length > 0">
             <p class="block-title">Query results: {{ cells_total_length }}</p>
+            <!-- table for result cells -->
             <div>
-                <table mat-table table [dataSource]="cells_table_rows" matSort
-                    (matSortChange)="onCellsSortChange($event)">
+                <table mat-table [dataSource]="cells_table_rows" matSort (matSortChange)="onCellsSortChange($event)">
 
                     <ng-container *ngFor="let col of cells_data_cols; let i = index" [matColumnDef]="col">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ col }}</th>
@@ -54,8 +61,51 @@
                 </table>
                 <mat-paginator [length]="cells_total_length" [pageSize]="cells_page_size" (page)="onCellsPage($event)"
                     [pageSizeOptions]="[5, 10, 25, 50, 100, 500, 1000]"
-                    aria-label="Select page of facts"></mat-paginator>
+                    aria-label="Select page of result cells"></mat-paginator>
             </div>
+
+            <!-- table for result cell cuts -->
+            <p class="block-title">Cell cut details: {{ cell_cuts_total_length }}</p>
+            <div>
+                <table mat-table [dataSource]="cell_cuts_table_rows" matSort
+                    (matSortChange)="onCellCutsSortChange($event)">
+
+                    <ng-container *ngFor="let col of cell_cuts_data_cols; let i = index" [matColumnDef]="col">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ col }}</th>
+                        <td mat-cell *matCellDef="let row">{{ row[col] }}</td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="cell_cuts_data_cols"></tr>
+                    <tr mat-row *matRowDef="let row; columns: cell_cuts_data_cols;"></tr>
+
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="4">-- No data --</td>
+                    </tr>
+                </table>
+                <mat-paginator [length]="cell_cuts_total_length" [pageSize]="cell_cuts_page_size"
+                    (page)="onCellCutsPage($event)" [pageSizeOptions]="[5, 10, 25, 50, 100, 500, 1000]"
+                    aria-label="Select page of result cell cuts"></mat-paginator>
+            </div>
+
+            <p class="block-title">Levels for Dimensions</p>
+            <div class="dimensions-grid">
+                <div>
+                    <b>Dimension</b>
+                </div>
+                <div>
+                    <b>Level hierarchy</b>
+                </div>
+                <ng-container *ngFor="let info_item of aggregate_service.levels_list">
+                    <div style="padding-left: 20px;">
+                        <b>{{ info_item[0] }}:</b>
+                    </div>
+                    <div style="padding-left: 20px;">
+                        {{ info_item[1].join(" => ") }}
+                    </div>
+                </ng-container>
+            </div>
+
+
         </ng-template>
 
     </mat-card-content>

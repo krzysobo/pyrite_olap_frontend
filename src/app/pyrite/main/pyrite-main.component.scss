@@ -21,7 +21,8 @@
 
 .cd-grid,
 .aggregate-summary-grid,
-.aggregate-query-grid {
+.aggregate-query-grid,
+.dimensions-grid {
   display: grid;
   grid-template-columns: 30% 70%;
   grid-template-rows: auto;
@@ -31,6 +32,14 @@
 
 .aggregate-summary-grid {
   grid-template-columns: 70% 30%;
+  width: 50%;
+  background-color: white;
+  padding: 10px;
+  // font-size: 20px;
+}
+
+.dimensions-grid {
+  grid-template-columns: 20% 80%;
   width: 50%;
   background-color: white;
   padding: 10px;
@@ -129,4 +138,15 @@
   padding-top: 0;
   margin-top: 0;
   font-size: 18px;
+}
+
+
+.error_field {
+  color: red;
+  font-size: 20px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 2px dashed red;
 }

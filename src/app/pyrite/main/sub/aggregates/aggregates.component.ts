@@ -10,19 +10,24 @@ import { MatTable } from '@angular/material/table';
   standalone: false,
   templateUrl: './aggregates.component.html',
   styleUrl: './aggregates.component.scss',
+  providers: [TableService],
 })
 export class AggregatesComponent implements OnInit, OnDestroy {
   form: FormGroup = new FormGroup({
     agg_query: new FormControl(''),
   }, {});
 
-  @ViewChild(MatTable) table: MatTable<any> | undefined;
+  @ViewChild(MatTable) tableResultCells: MatTable<any> | undefined;
+  @ViewChild(MatTable) tableResultCellCuts: MatTable<any> | undefined;
+  private resultCellsTableService: TableService = new TableService();
+  private resultCellCutsTableService: TableService = new TableService();
 
+  private _aggregate_query_error: string = "";
 
   constructor(
     private aggregateService: AggregateService,
     private httpCubeService: HttpCubeService,
-    private tableService: TableService) {
+  ) {
 
   }
 
@@ -48,9 +53,19 @@ export class AggregatesComponent implements OnInit, OnDestroy {
       next: (resp: any) => {
         console.log("== get_cube_aggregate - cube aggregates for " + this.aggregateService.cube_name, resp);
         this.init_aggregate_data_from_endpoint(resp.body);
+        this._aggregate_query_error = "";
       },
       error: (resp: any) => {
         console.log("== get_cube_aggregate - ERRORS", resp);
+          /*
+            {
+                "error": "missing_object",
+                "message": "cube 'irbd_balance' has no dimension 'blah'",
+                "object": null,
+                "object_type": "dimension"
+            }
+          */        
+          this._aggregate_query_error = "[" + resp.error.error + "] - "  + resp.error.message;
       },
       complete: () => { }
     });
@@ -66,24 +81,35 @@ export class AggregatesComponent implements OnInit, OnDestroy {
 
   init_aggregate_data_from_endpoint(aggregate_data: any) {
     this.aggregateService.init_aggregate_data_from_endpoint(aggregate_data);
-    this.tableService.init_data_source(this.aggregateService.cells);
-    if (this.table) {
-      this.table.renderRows();
+    this.resultCellsTableService.init_data_source(this.aggregateService.cells);
+    this.resultCellCutsTableService.init_data_source(this.aggregateService.cell);
+
+    if (this.tableResultCells) {
+      this.tableResultCells.renderRows();
     }
+
+    if (this.tableResultCellCuts) {
+      this.tableResultCellCuts.renderRows();
+    }
+
+    console.log("QQQQ resultCells items", this.resultCellsTableService.items_length);
+    console.log("QQQQ resultCellCuts items", this.resultCellCutsTableService.items_length);
   }
 
-
+  get aggregate_query_error() {
+    return this._aggregate_query_error;
+  }
 
   // ================== TABLE =====================
-  /**
+ /**
  * event handler for pagination (onPage)
  * @param evt$ 
  */
   onCellsPage(evt$: any) {
     console.log("---- onCellsPage - onPage ", evt$);
     // this.itemsNo = evt$.length;
-    this.tableService.page_size = evt$.pageSize;
-    this.tableService.page_index = evt$.pageIndex;
+    this.resultCellsTableService.page_size = evt$.pageSize;
+    this.resultCellsTableService.page_index = evt$.pageIndex;
   }
 
   /**
@@ -92,24 +118,55 @@ export class AggregatesComponent implements OnInit, OnDestroy {
    */
   onCellsSortChange(evt$: any) {
     console.log("---- onCellsSortChange - onSortChange ", evt$);
-    this.tableService.sort_items(evt$.active, evt$.direction);
+    this.resultCellsTableService.sort_items(evt$.active, evt$.direction);
   }
 
   get cells_data_cols() {
-    return this.tableService.columns;
-  }
-
-  get cells_page_size() {
-    return this.tableService.page_size;
+    return this.resultCellsTableService.columns;
   }
 
   get cells_table_rows() {
-    // // console.log("CELLS LIST LENGTH - aggregateService: ", this.aggregateService.cells.length, "tableService: ",
-    //   this.tableService.items.length);
-    return this.tableService.table_rows;
+    // // console.log("CELLS LIST LENGTH - aggregateService: ", this.aggregateService.cells.length, "resultCellsTableService: ",
+    //   this.resultCellsTableService.items.length);
+    return this.resultCellsTableService.table_rows;
   }
 
-  get cells_total_length() {
-    return this.tableService.items_length;
+  get cells_page_size() {
+    return this.resultCellsTableService.page_size;
   }
+
+
+  get cells_total_length() {
+    return this.resultCellsTableService.items_length;
+  }
+
+  // --- cell cuts ---
+  onCellCutsPage(evt$: any) {
+    console.log("---- onCellCutsPage - onPage ", evt$);
+    // this.itemsNo = evt$.length;
+    this.resultCellsTableService.page_size = evt$.pageSize;
+    this.resultCellsTableService.page_index = evt$.pageIndex;
+  }
+
+  onCellCutsSortChange(evt$: any) {
+    console.log("---- onCellCutsSortChange - onSortChange ", evt$);
+    this.resultCellCutsTableService.sort_items(evt$.active, evt$.direction);
+  }
+
+  get cell_cuts_data_cols() {
+    return this.resultCellCutsTableService.columns;
+  }
+
+  get cell_cuts_table_rows() {
+    return this.resultCellCutsTableService.table_rows;
+  }
+
+  get cell_cuts_page_size() {
+    return this.resultCellCutsTableService.page_size;
+  }
+
+  get cell_cuts_total_length() {
+    return this.resultCellCutsTableService.items_length;
+  }
+
 }
