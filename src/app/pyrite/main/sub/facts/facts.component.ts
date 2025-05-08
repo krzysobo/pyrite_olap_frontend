@@ -12,7 +12,7 @@ export class FactsComponent implements AfterViewInit {
   @ViewChild(MatTable) table: MatTable<any> | undefined;
 
   constructor(private factTableService: FactTableService) {
-    console.log("-- FactsComponent - init_facts_data_source in CONSTRUCTOR");
+
   }
 
   ngAfterViewInit() { }

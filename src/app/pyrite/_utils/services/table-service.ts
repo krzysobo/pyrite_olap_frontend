@@ -3,11 +3,11 @@ import { Injectable } from "@angular/core";
 @Injectable({
   providedIn: 'root'
 })
-export class FactTableService {
+export class TableService {
   private _items: any = [];
   private _columns: string[] = [];
 
-  private _group_columns_labels = true;
+  private _group_columns_labels = false;
 
   private _page_size = 5;
   private _page_index = 0;
@@ -50,13 +50,13 @@ export class FactTableService {
     var pageStart = this._page_size * this._page_index;
     var pageEnd = (pageStart + this._page_size < this.items_length) ? pageStart + this._page_size : this.items_length;
 
-    // console.log("================================== _page_size", this._page_size, "items_length ", this.items_length, " _page_index ", this._page_index, " pagestart ", pageStart, "page end", pageEnd);
+    // console.log("================================== TableService - table_rows: _page_size", this._page_size, "items_length ", this.items_length, " _page_index ", this._page_index, " pagestart ", pageStart, "page end", pageEnd);
     return this.items.slice(pageStart, pageEnd);
   }
 
 
   sort_items(col: string, direction: string) {
-    console.log("FactTableService - sort_items - BEFORE ", this._items);
+    // console.log("TableService - sort_items - BEFORE ", this._items);
     var sorted_items = this._items.sort((n1: any, n2: any) => {
       if (direction == 'asc') {
         if (n1[col] > n2[col]) {
@@ -78,7 +78,7 @@ export class FactTableService {
       }
     });
     this._items = sorted_items;
-    console.log("FactTableService - sort_items - AFTER ", this._items);
+    // console.log("TableService - sort_items - AFTER ", this._items);
   }
 
   add_items(items: any) {
@@ -90,7 +90,7 @@ export class FactTableService {
   }
 
   public init_data_source(items: any) {
-    console.log("-- FactTableService - init_data_source - ITEMS_IN ", items);
+    // console.log("-- TableService - init_data_source - ITEMS_IN ", items);
     this._items = [];
 
     if ((items == undefined) || (items == null) || (items.length < 1)) {
@@ -112,7 +112,7 @@ export class FactTableService {
         }
       }
 
-      console.log("cols with labels", cols_with_labels);
+      // console.log("cols with labels", cols_with_labels);
 
       if (cols_with_labels.length > 0) {
         for (var i in items) {
@@ -128,7 +128,7 @@ export class FactTableService {
     }
 
 
-    console.log("-- FactTableService - init_data_source - ITEMS_OUT ", items);
+    console.log("-- TableService - init_data_source - ITEMS_OUT ", items);
 
     this._columns = cols_tmp;
     // this._items = items;

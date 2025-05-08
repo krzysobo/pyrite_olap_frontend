@@ -61,6 +61,8 @@ export class AggregateService {
   
   init_aggregate_data_from_endpoint(aggregate_data: any) {
     this._aggregate_data = aggregate_data;
+    console.log("AggregateService - init_aggregate_data_from_endpoint - CELLS LIST LENGTH - ",this.cells.length);
+
   }
 
 }

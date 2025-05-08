@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { CubesListResponse } from '../../_http/responses'
-import { UniResponse } from '../../_http/uniresponse'
+import { CubesListResponse } from './responses'
+import { UniResponse } from './uniresponse'
 
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class CubeService {
+export class HttpCubeService {
   private _api_prefix = 'http://localhost:5000/';
   private _api_url_system_info =  this._api_prefix + "info";
   private _api_url_system_version =  this._api_prefix + "version";
@@ -79,7 +79,7 @@ export class CubeService {
 
      */
     var url = this._api_url_cube_aggregate.replace(/{cube_name}/gi, cube_name) + this.add_param_list_if_not_empty(param_list);
-    console.log("CubeService - get_cube_aggregate URL: ", url);
+    console.log("HttpCubeService - get_cube_aggregate URL: ", url);
 
     return this.http.get<HttpResponse<UniResponse>>(      
       url,
