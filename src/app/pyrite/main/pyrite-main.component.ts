@@ -38,15 +38,6 @@ export class PyriteMainComponent implements OnInit, OnDestroy {
     return this._expanded_cube_model;
   }
 
-  // get facts_data_rows() {
-  //   return this.factsComponent.facts_data_rows;
-  // }
-
-  // get facts_data_cols() {
-  //   return this.factsComponent.facts_data_cols;
-  // }
-
-
   expand_cube_info(cube_name: string) {
     var aggregate_params: any = [];
     var facts_params: any = [];
@@ -93,7 +84,6 @@ export class PyriteMainComponent implements OnInit, OnDestroy {
     this.cubeService.get_cubes_list().subscribe({
       next: (resp: any) => {
         console.log("== refresh_cubes_list - cubes list:", resp);
-        // console.log("AdminUserEditComponent - list - data: ", resp);
         if ((resp.body != null) && (resp.body != undefined) && (resp.body != null)) {
           this._cubes = resp.body;
 
