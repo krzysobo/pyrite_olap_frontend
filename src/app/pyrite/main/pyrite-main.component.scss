@@ -39,7 +39,6 @@
 
 .aggregate-query-grid {
   grid-template-columns: 90% 10%;
-  width: 70%;
 
   background-color: white;
   padding: 10px;
@@ -48,15 +47,20 @@
 }
 
 .aggregate-query-grid > div {
-  border: 1px dotted red;
+  // border: 1px dotted red;
   padding: 5px;
   height: 100%;
 }
 
-.aggregate-query-grid div * {
+.aggregate-query-grid > div > button {
   width: 100%;
-  //  height: 100%;
+  margin-top: 20px;
 }
+
+// .aggregate-query-grid div  {
+//   width: 100%;
+//   //  height: 100%;
+// }
 
 
 .mat-tab-content {
