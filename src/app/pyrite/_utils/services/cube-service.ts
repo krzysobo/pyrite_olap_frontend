@@ -79,6 +79,7 @@ export class CubeService {
 
      */
     var url = this._api_url_cube_aggregate.replace(/{cube_name}/gi, cube_name) + this.add_param_list_if_not_empty(param_list);
+    console.log("CubeService - get_cube_aggregate URL: ", url);
 
     return this.http.get<HttpResponse<UniResponse>>(      
       url,

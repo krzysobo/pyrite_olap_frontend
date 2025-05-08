@@ -5,11 +5,20 @@ import { Injectable } from "@angular/core";
 })
 export class AggregateService {
   private _aggregate_data: any = {};
+  private _cube_name: string = "";
 
   constructor() {}
 
   
-  
+  set_cube_name(cube_name: string) {
+    this._cube_name = cube_name;
+    console.log("AggregateService - set_cube_name - _cube_name ", this._cube_name);
+  }
+
+  get cube_name() {
+    return this._cube_name;
+  }
+
   get aggregates() {
     if ((this._aggregate_data.aggregates != undefined) && (this._aggregate_data.aggregates != null)) {
       return this._aggregate_data.aggregates;

@@ -4,11 +4,31 @@
         <div class="aggregate-summary-grid">
             <ng-container *ngFor="let agg of aggregate_service.aggregates; let i = index">
                 <div><b>{{ agg }}</b></div>
-                <div *ngIf="(aggregate_service.get_summary_for_agg(agg) != ''); else noSummaryBl" >{{ aggregate_service.get_summary_for_agg(agg) }}</div>
+                <div *ngIf="(aggregate_service.get_summary_for_agg(agg) != ''); else noSummaryBl">{{
+                    aggregate_service.get_summary_for_agg(agg) }}</div>
                 <ng-template #noSummaryBl>
                     <div> -- </div>
                 </ng-template>
             </ng-container>
         </div>
+
+        <form [formGroup]="form" (ngSubmit)="submit_query_form()">
+            <div class="aggregate-query-grid">
+                <div>
+                    <mat-form-field>
+                        <mat-label>Query aggregates eg. drilldown=year|item&cut=item:a</mat-label>
+                        <textarea matInput formControlName="agg_query"></textarea>
+                        <mat-hint align="start" style="font-size: 15px;">
+                            For example:
+                            <strong><u>drilldown=year|item&cut=item:a</u></strong> 
+                        </mat-hint>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <button mat-flat-button type="submit">REFRESH</button>
+                </div>
+            </div>
+        </form>
+
     </mat-card-content>
 </mat-card>

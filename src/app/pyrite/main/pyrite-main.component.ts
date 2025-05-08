@@ -56,17 +56,19 @@ export class PyriteMainComponent implements OnInit, OnDestroy {
       complete: () => { }
     });
 
+    this.aggregatesComponent.set_cube_name(cube_name);
+    this.aggregatesComponent.refresh_aggregates(aggregate_params);
 
-    this.cubeService.get_cube_aggregate(cube_name, aggregate_params).subscribe({
-      next: (resp: any) => {
-        console.log("== get_cube_aggregate - cube aggregates for " + cube_name, resp);
-        this.aggregatesComponent.init_aggregate_data_from_endpoint(resp.body);
-      },
-      error: (resp) => {
-        console.log("== get_cube_aggregate - ERRORS", resp);
-      },
-      complete: () => { }
-    });
+    // this.cubeService.get_cube_aggregate(cube_name, aggregate_params).subscribe({
+    //   next: (resp: any) => {
+    //     console.log("== get_cube_aggregate - cube aggregates for " + cube_name, resp);
+    //     this.aggregatesComponent.init_aggregate_data_from_endpoint(resp.body);
+    //   },
+    //   error: (resp) => {
+    //     console.log("== get_cube_aggregate - ERRORS", resp);
+    //   },
+    //   complete: () => { }
+    // });
 
     this.cubeService.get_cube_facts(cube_name, facts_params).subscribe({
       next: (resp: any) => {
