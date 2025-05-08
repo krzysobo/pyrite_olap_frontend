@@ -9,6 +9,9 @@ export class FactTableService {
 
   private _group_columns_labels = true;
 
+  private _page_size = 5;
+  private _page_index = 0;
+
   constructor() { }
 
   set group_columns_labels(state: boolean) {
@@ -22,6 +25,35 @@ export class FactTableService {
   get items() {
     return this._items;
   }
+
+  get items_length() {
+    return this.items.length;
+  }
+
+  get page_size() {
+    return this._page_size;
+  }
+
+  get page_index() {
+    return this._page_index;
+  }
+
+  set page_size(val: number) {
+    this._page_size = val;
+  }
+
+  set page_index(val: number) {
+    this._page_index = val;
+  }
+
+  get table_rows() {
+    var pageStart = this._page_size * this._page_index;
+    var pageEnd = (pageStart + this._page_size < this.items_length) ? pageStart + this._page_size : this.items_length;
+
+    console.log("================================== _page_size", this._page_size, "items_length ", this.items_length, " _page_index ", this._page_index, " pagestart ", pageStart, "page end", pageEnd);
+    return this.items.slice(pageStart, pageEnd);
+  }
+
 
   sort_items(col: string, direction: string) {
     console.log("FactTableService - sort_items - BEFORE ", this._items);
@@ -47,17 +79,6 @@ export class FactTableService {
     });
     this._items = sorted_items;
     console.log("FactTableService - sort_items - AFTER ", this._items);
-    // var sortedArray: { age: number; }[] = objectArray.sort((n1,n2) => {
-    //     if (n1.age > n2.age) {
-    //         return 1;
-    //     }
-
-    //     if (n1.age < n2.age) {
-    //         return -1;
-    //     }
-
-    //     return 0;
-    // });
   }
 
   add_items(items: any) {
@@ -110,12 +131,7 @@ export class FactTableService {
     console.log("-- FactTableService - init_data_source - ITEMS_OUT ", items);
 
     this._columns = cols_tmp;
-
-    // for(var item of items) {
-    //   this._items.push(item);
-    // }
-    this._items = items;
-
+    // this._items = items;
     console.log("==== COLUMNS ", this._columns);
 
     this._items = items;
