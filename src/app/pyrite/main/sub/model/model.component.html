@@ -1,0 +1,96 @@
+<mat-card class="aggregates-card">
+    <mat-card-title>Model - dimensions</mat-card-title>
+    <mat-card-content>
+        <ng-template ngFor let-data [ngForOf]="model_service.model_dimensions" let-i="index">
+            <mat-expansion-panel style="width: auto;  margin-right: 10px; margin-left: 20px; margin-bottom: 30px;">
+                <mat-expansion-panel-header>
+                    <mat-panel-title> {{ data.name }}</mat-panel-title>
+                    <mat-panel-description>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div class="cd-grid">
+                    <div>Is flat? </div>
+                    <div>
+                        <ng-template [ngIf]="data.is_flat" [ngIfElse]="not_flat">YES</ng-template>
+                        <ng-template #not_flat>NO</ng-template>
+                    </div>
+
+                    <div>Has details? </div>
+                    <div>
+                        <ng-template [ngIf]="data.has_details" [ngIfElse]="no_details">YES</ng-template>
+                        <ng-template #no_details>NO</ng-template>
+                    </div>
+
+                    <div>Default hierarchy:</div>
+                    <div>{{ data.default_hierarchy_name }}</div>
+
+                    <div><b>Hierarchies:</b></div>
+                        <ul>
+                            <ng-template ngFor let-hie [ngForOf]="data.hierarchies" let-hie_index="index">
+                                <li>
+                                    <b>{{ hie.name }}</b> - levels: <i>{{ hie.levels.join(" => ") }}</i>
+                                </li>
+                            </ng-template>
+                        </ul>
+                    <div><b>Levels:</b></div>
+                    <div>
+                        <ul>
+                            <ng-template ngFor let-lvl [ngForOf]="data.levels" let-lvl_index="index">
+                                <li style="margin-bottom: 10px;">
+                                    <b>{{ lvl. label }} ({{ lvl.name }})</b>
+                                    <ul>
+                                        <li>Key: {{ lvl.key }}
+                                        <li>Label attribute: {{ lvl.label_attribute }}
+                                        <li>Order attribute: {{ lvl.order_attribute }}
+                                            <!-- "attributes": [
+                                            {
+                                                "name": "subcategory",
+                                                "info": {},
+                                                "ref": "item.subcategory",
+                                                "locales": []
+                                            },
+                                            {
+                                                "name": "subcategory_label",
+                                                "info": {},
+                                                "ref": "item.subcategory_label",
+                                                "locales": []
+                                            }
+                                            ] -->
+
+                                    </ul>
+                                </li>
+                            </ng-template>
+                        </ul>
+                    </div>
+                    <div><b>Members:</b></div>
+                    <div>
+                        <button mat-stroked-button>Click to load</button>
+                        
+        
+                    </div>
+
+                    <!-- <div>Name:</div>
+                    <div>{{ data.name }}</div>
+
+                    <div>Category:</div>
+                    <div *ngIf="(data.category != null) && (data.category != ''); else noCategoryBl">{{
+                        data.category }}AA</div>
+                    <ng-template #noCategoryBl>--</ng-template>
+
+                    <div>Info:</div>
+                    <div>&nbsp;</div> -->
+                </div>
+                <!-- <div>
+                    <ul style="margin-top: 0">
+                        <li *ngFor="let info_item of data.info|keyvalue">
+                            {{ info_item.key }}: {{ info_item.value}}
+                        </li>
+                    </ul>
+                </div> -->
+
+            </mat-expansion-panel>
+
+        </ng-template>
+
+    </mat-card-content>
+</mat-card>

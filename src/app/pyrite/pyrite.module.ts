@@ -17,6 +17,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatAccordion, MatExpansionModule} from '@angular/material/expansion';
 import { AggregatesComponent } from "./main/sub/aggregates/aggregates.component";
 import { FactsComponent } from "./main/sub/facts/facts.component";
+import { ModelComponent } from "./main/sub/model/model.component";
 // import { HttpClient, HttpHandler } from "@angular/common/http";
 
 @NgModule({
@@ -43,9 +44,10 @@ import { FactsComponent } from "./main/sub/facts/facts.component";
     ],
 
     declarations: [
-        PyriteMainComponent,
+        ModelComponent,
         AggregatesComponent,
         FactsComponent,
+        PyriteMainComponent,
 
     ],
     providers: [

@@ -5,6 +5,7 @@ import { HttpCubeService } from '../_http/cube-service';
 // table imports
 import { AggregatesComponent } from './sub/aggregates/aggregates.component';
 import { FactsComponent } from './sub/facts/facts.component';
+import { ModelComponent } from './sub/model/model.component';
 
 
 @Component({
@@ -12,7 +13,7 @@ import { FactsComponent } from './sub/facts/facts.component';
   standalone: false,
   templateUrl: './pyrite-main.component.html',
   styleUrl: './pyrite-main.component.scss',
-  providers: [AggregatesComponent, FactsComponent],
+  providers: [AggregatesComponent, FactsComponent, ModelComponent],
 })
 export class PyriteMainComponent implements OnInit, OnDestroy {
   private _cubes: any[] = [];
@@ -21,6 +22,7 @@ export class PyriteMainComponent implements OnInit, OnDestroy {
 
   constructor(
     private aggregatesComponent: AggregatesComponent,
+    private modelComponent: ModelComponent,
     private factsComponent: FactsComponent,
     private httpCubeService: HttpCubeService) {
   }
@@ -48,8 +50,10 @@ export class PyriteMainComponent implements OnInit, OnDestroy {
       next: (resp: any) => {
         console.log("== get_cube_model - cube model for " + cube_name, resp);
         this._expanded_cube_model = resp.body;
+        this.modelComponent.set_cube_name(cube_name);
+        this.modelComponent.set_model_data(resp.body);
       },
-      error: (resp) => {
+      error: (resp: any) => {
         console.log("== get_cube_model - ERRORS", resp);
       },
       complete: () => { }
@@ -74,7 +78,7 @@ export class PyriteMainComponent implements OnInit, OnDestroy {
         console.log("== get_cube_facts - cube facts for " + cube_name, resp);
         this.factsComponent.init_facts_data_source(resp.body);
       },
-      error: (resp) => {
+      error: (resp: any) => {
         console.log("== get_cube_facts - ERRORS", resp);
       },
       complete: () => { }
@@ -91,7 +95,7 @@ export class PyriteMainComponent implements OnInit, OnDestroy {
         }
 
       },
-      error: (resp) => {
+      error: (resp: any) => {
         console.log("== refresh_cubes_list - ERRORS", resp);
       },
       complete: () => { }
