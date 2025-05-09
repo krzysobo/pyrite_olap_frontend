@@ -17,8 +17,6 @@ export class AggregatesComponent implements OnInit, OnDestroy {
     agg_query: new FormControl(''),
   }, {});
 
-  @ViewChild(MatTable) tableResultCells: MatTable<any> | undefined;
-  @ViewChild(MatTable) tableResultCellCuts: MatTable<any> | undefined;
   private resultCellsTableService: TableService = new TableService();
   private resultCellCutsTableService: TableService = new TableService();
 
@@ -57,15 +55,15 @@ export class AggregatesComponent implements OnInit, OnDestroy {
       },
       error: (resp: any) => {
         console.log("== get_cube_aggregate - ERRORS", resp);
-          /*
-            {
-                "error": "missing_object",
-                "message": "cube 'irbd_balance' has no dimension 'blah'",
-                "object": null,
-                "object_type": "dimension"
-            }
-          */        
-          this._aggregate_query_error = "[" + resp.error.error + "] - "  + resp.error.message;
+        /*
+          {
+              "error": "missing_object",
+              "message": "cube 'irbd_balance' has no dimension 'blah'",
+              "object": null,
+              "object_type": "dimension"
+          }
+        */
+        this._aggregate_query_error = "[" + resp.error.error + "] - " + resp.error.message;
       },
       complete: () => { }
     });
@@ -76,24 +74,20 @@ export class AggregatesComponent implements OnInit, OnDestroy {
     console.log("--- submit query form");
     const agg_query = this.form.controls['agg_query'].value;
     console.log("--- submit query form - query: ", agg_query);
+    this.resultCellsTableService.page_index = 0;
+    this.resultCellCutsTableService.page_index = 0;
+
+    this.resultCellsTableService.page_size = 5;
+    this.resultCellCutsTableService.page_size = 5;
+
     this.refresh_aggregates(agg_query.split("&"));
   }
 
   init_aggregate_data_from_endpoint(aggregate_data: any) {
     this.aggregateService.init_aggregate_data_from_endpoint(aggregate_data);
+
     this.resultCellsTableService.init_data_source(this.aggregateService.cells);
     this.resultCellCutsTableService.init_data_source(this.aggregateService.cell);
-
-    if (this.tableResultCells) {
-      this.tableResultCells.renderRows();
-    }
-
-    if (this.tableResultCellCuts) {
-      this.tableResultCellCuts.renderRows();
-    }
-
-    console.log("QQQQ resultCells items", this.resultCellsTableService.items_length);
-    console.log("QQQQ resultCellCuts items", this.resultCellCutsTableService.items_length);
   }
 
   get aggregate_query_error() {
@@ -101,10 +95,10 @@ export class AggregatesComponent implements OnInit, OnDestroy {
   }
 
   // ================== TABLE =====================
- /**
- * event handler for pagination (onPage)
- * @param evt$ 
- */
+  /**
+  * event handler for pagination (onPage)
+  * @param evt$ 
+  */
   onCellsPage(evt$: any) {
     console.log("---- onCellsPage - onPage ", evt$);
     // this.itemsNo = evt$.length;
@@ -126,13 +120,15 @@ export class AggregatesComponent implements OnInit, OnDestroy {
   }
 
   get cells_table_rows() {
-    // // console.log("CELLS LIST LENGTH - aggregateService: ", this.aggregateService.cells.length, "resultCellsTableService: ",
-    //   this.resultCellsTableService.items.length);
     return this.resultCellsTableService.table_rows;
   }
 
   get cells_page_size() {
     return this.resultCellsTableService.page_size;
+  }
+
+  get cells_page_index() {
+    return this.resultCellsTableService.page_index;
   }
 
 
@@ -163,6 +159,10 @@ export class AggregatesComponent implements OnInit, OnDestroy {
 
   get cell_cuts_page_size() {
     return this.resultCellCutsTableService.page_size;
+  }
+
+  get cell_cuts_page_index() {
+    return this.resultCellCutsTableService.page_index;
   }
 
   get cell_cuts_total_length() {

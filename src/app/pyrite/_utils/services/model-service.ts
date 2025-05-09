@@ -52,7 +52,7 @@ export class ModelService {
     return this._model_data.details;
   }
 
-  get model_dimensions() {
+  get model_dimensions(): any {
     return this._model_data.dimensions;
   }
 

@@ -18,12 +18,15 @@ export class ModelComponent implements OnInit, OnDestroy {
     agg_query: new FormControl(''),
   }, {});
 
-  // @ViewChild(MatTable) tableResultCells: MatTable<any> | undefined;
+  @ViewChild(MatTable) _dimTables: MatTable<any>[] | undefined;
   // @ViewChild(MatTable) tableResultCellCuts: MatTable<any> | undefined;
   // private resultCellsTableService: TableService = new TableService();
   // private resultCellCutsTableService: TableService = new TableService();
 
   private _aggregate_query_error: string = "";
+
+  private _dimsTableServices: any = {};
+  // private _dimsMatTables: any = {};
 
   constructor(
     // private aggregateService: AggregateService,
@@ -48,8 +51,15 @@ export class ModelComponent implements OnInit, OnDestroy {
     console.log("ModelComponent - set_cube_name - _cube_name ", this.modelService.cube_name);
   }
 
-  set_model_data(model_data: any) {
+  set_model_data(model_data: any) {    
     this.modelService.set_model_data(model_data);
+    console.log("===== CUBE NAME: ", this.modelService.cube_name, " number of dimensions: ", this.modelService.model_dimensions.length);
+    this._dimsTableServices = {};
+
+    for(var dim of this.modelService.model_dimensions) {
+      console.log("DIM : ", dim);
+      this._dimsTableServices[dim.name] = new TableService();        
+    }
   }
 
 }

@@ -59,7 +59,7 @@
                         <td class="mat-cell" colspan="4">-- No data --</td>
                     </tr>
                 </table>
-                <mat-paginator [length]="cells_total_length" [pageSize]="cells_page_size" (page)="onCellsPage($event)"
+                <mat-paginator [length]="cells_total_length" [pageIndex]="cells_page_index" [pageSize]="cells_page_size" (page)="onCellsPage($event)"
                     [pageSizeOptions]="[5, 10, 25, 50, 100, 500, 1000]"
                     aria-label="Select page of result cells"></mat-paginator>
             </div>
@@ -82,7 +82,7 @@
                         <td class="mat-cell" colspan="4">-- No data --</td>
                     </tr>
                 </table>
-                <mat-paginator [length]="cell_cuts_total_length" [pageSize]="cell_cuts_page_size"
+                <mat-paginator [length]="cell_cuts_total_length" [pageIndex]="cell_cuts_page_index" [pageSize]="cell_cuts_page_size"
                     (page)="onCellCutsPage($event)" [pageSizeOptions]="[5, 10, 25, 50, 100, 500, 1000]"
                     aria-label="Select page of result cell cuts"></mat-paginator>
             </div>

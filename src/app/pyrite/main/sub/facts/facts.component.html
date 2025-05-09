@@ -1,4 +1,5 @@
-<table mat-table table [dataSource]="table_rows" matSort (matSortChange)="onSortChange($event)">
+<table mat-table table [dataSource]="table_rows" matSort (matSortChange)="onSortChange($event)"
+    style="width: auto; max-width: 1000px; overflow:scroll;">
 
     <ng-container *ngFor="let col of facts_data_cols; let i = index" [matColumnDef]="col">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ col }}</th>
@@ -12,5 +13,5 @@
         <td class="mat-cell" colspan="4">-- No data --</td>
     </tr>
 </table>
-<mat-paginator [length]="items_length" [pageSize]="page_size" (page)="onPage($event)" [pageSizeOptions]="[5, 10, 25, 50, 100, 500, 1000]"
-    aria-label="Select page of facts"></mat-paginator>
+<mat-paginator [length]="items_length" [pageSize]="page_size" (page)="onPage($event)"
+    [pageSizeOptions]="[5, 10, 25, 50, 100, 500, 1000]" aria-label="Select page of facts"></mat-paginator>
