@@ -21,6 +21,7 @@
 
 .cd-grid,
 .aggregate-summary-grid,
+.aggregate-dimensions-grid,
 .aggregate-query-grid,
 .dimensions-grid {
   display: grid;
@@ -44,6 +45,13 @@
   background-color: white;
   padding: 10px;
   // font-size: 20px;
+}
+
+.aggregate-dimensions-grid {
+  grid-template-columns: 20% 80%;
+  width: 50%;
+  background-color: white;
+  padding: 10px;
 }
 
 .aggregate-query-grid {
@@ -149,4 +157,12 @@
   padding: 10px;
   border-radius: 5px;
   border: 2px dashed red;
+}
+
+.raw-facts-table {
+  width: auto; 
+  max-width: 75%; 
+  overflow:scroll;
+  margin: 10px;
+  height: auto;
 }

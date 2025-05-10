@@ -12,6 +12,29 @@
             </ng-container>
         </div>
 
+        <p class="block-title">Measures</p>
+        <div class="aggregate-summary-grid">
+            <ng-container *ngFor="let mea of model_service.model_measures; let i = index">
+                <div><b>{{ mea.label }} ({{ mea.name }})</b></div>
+                <div>
+                    {{ mea.aggregates.join(", ")}}
+                    <!-- <ng-container *ngFor="let aggr of mea.aggregates; let j = index">
+                        {{ aggr }}
+                    </ng-container> -->
+                </div>
+            </ng-container>
+        </div>
+
+        <p class="block-title">Dimensions</p>
+        <div class="aggregate-dimensions-grid">
+            <ng-container *ngFor="let dim of model_service.model_dimensions; let i = index">
+                <div><b>{{ dim.label }} ({{ dim.name }})</b></div>
+                <div>
+                    Levels: <i>{{model_service.dimension_levels(dim.name).join(" => ") }}</i>
+                </div>
+            </ng-container>
+        </div>
+
         <p class="block-title">Query</p>
         <div>
             <form [formGroup]="form" (ngSubmit)="submit_query_form()">

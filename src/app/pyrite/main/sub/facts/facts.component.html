@@ -1,17 +1,19 @@
-<table mat-table table [dataSource]="table_rows" matSort (matSortChange)="onSortChange($event)"
-    style="width: auto; max-width: 1000px; overflow:scroll;">
+<div class="raw-facts-table">
+    <table mat-table table [dataSource]="table_rows" matSort (matSortChange)="onSortChange($event)">
 
-    <ng-container *ngFor="let col of facts_data_cols; let i = index" [matColumnDef]="col">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ col }}</th>
-        <td mat-cell *matCellDef="let row">{{ row[col] }}</td>
-    </ng-container>
+        <ng-container *ngFor="let col of facts_data_cols; let i = index" [matColumnDef]="col">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ col }}</th>
+            <td mat-cell *matCellDef="let row">{{ row[col] }}</td>
+        </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="facts_data_cols"></tr>
-    <tr mat-row *matRowDef="let row; columns: facts_data_cols;"></tr>
+        <tr mat-header-row *matHeaderRowDef="facts_data_cols"></tr>
+        <tr mat-row *matRowDef="let row; columns: facts_data_cols;"></tr>
 
-    <tr class="mat-row" *matNoDataRow>
-        <td class="mat-cell" colspan="4">-- No data --</td>
-    </tr>
-</table>
-<mat-paginator [length]="items_length" [pageSize]="page_size" (page)="onPage($event)"
-    [pageSizeOptions]="[5, 10, 25, 50, 100, 500, 1000]" aria-label="Select page of facts"></mat-paginator>
+        <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">-- No data --</td>
+        </tr>
+    </table>
+
+    <mat-paginator [length]="items_length" [pageSize]="page_size" (page)="onPage($event)"
+        [pageSizeOptions]="[5, 10, 25, 50, 100, 500, 1000]" aria-label="Select page of facts"></mat-paginator>
+</div>

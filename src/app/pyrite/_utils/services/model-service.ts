@@ -56,6 +56,21 @@ export class ModelService {
     return this._model_data.dimensions;
   }
 
+  dimension_levels(dim_name: string) {
+    var res_out = [];
+    for (var dim of this.model_dimensions) {
+      if (dim.name != dim_name) {
+        continue;
+      }
+
+      for (var dim_level of dim.levels) {
+        res_out.push(dim_level.name)
+      }
+    }
+
+    return res_out;
+  }
+
   get model_features() {
     return this._model_data.features;
   }

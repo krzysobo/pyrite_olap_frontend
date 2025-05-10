@@ -4,6 +4,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { HttpCubeService } from '../../../_http/cube-service';
 import { TableService } from '../../../_utils/services/table-service';
 import { MatTable } from '@angular/material/table';
+import { ModelService } from '../../../_utils/services/model-service';
 
 @Component({
   selector: 'app-pyrite-main-aggregates',
@@ -24,6 +25,7 @@ export class AggregatesComponent implements OnInit, OnDestroy {
 
   constructor(
     private aggregateService: AggregateService,
+    private modelService: ModelService,
     private httpCubeService: HttpCubeService,
   ) {
 
@@ -37,6 +39,10 @@ export class AggregatesComponent implements OnInit, OnDestroy {
 
   get aggregate_service(): AggregateService {
     return this.aggregateService;
+  }
+
+  get model_service(): ModelService {
+    return this.modelService;
   }
 
 
