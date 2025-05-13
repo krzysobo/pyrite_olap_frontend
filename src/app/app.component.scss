@@ -21,7 +21,7 @@
   .app-container {
     display: grid;
     grid-template-columns: 250px 1fr 220px;
-    grid-template-rows: auto 1fr auto;
+    grid-template-rows: 50px 1fr 100px;
     // grid-template-rows: 30px 90% 30px;
     grid-gap: 20px;
     grid-template-areas: 
@@ -31,7 +31,7 @@
     "footer footer footer";
     height: auto;
     padding: 20px 10px 0px 50px;
-    min-height: 95vh;
+    min-height: 100vh;
 
     background-color: #f0f0f0;
   }
@@ -60,12 +60,13 @@
   .app-footer {
     grid-area: footer;
     // border: 1px solid blue;
-    padding: 5px 10px 10px 10px;
+    padding: 15px 10px 15px 10px;
+    margin-bottom: 50px;
+    background-color: white;
 
     .footer-nav ul {
       @include horizontal-list();
     }
-
   }
 
   .app-main {
@@ -76,3 +77,12 @@
   }
 
 
+  a:visited, a:hover, a:active {
+    color: black;
+  }
+
+  a:hover, a:active {
+    font-weight: bold;
+
+  }
+  
