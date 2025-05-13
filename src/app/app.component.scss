@@ -38,7 +38,7 @@
 
   .app-header{
     grid-area: header;
-    border: 1px solid blue;
+    // border: 1px solid blue;
     // border-bottom: 1px dashed gray;
     padding: 5px 5px 5px 10px;
     nav ul {
@@ -59,7 +59,7 @@
 
   .app-footer {
     grid-area: footer;
-    border: 1px solid blue;
+    // border: 1px solid blue;
     padding: 5px 10px 10px 10px;
 
     .footer-nav ul {
@@ -70,7 +70,7 @@
 
   .app-main {
     grid-area: content;
-    border: 1px solid blue;
+    // border: 1px solid blue;
     padding: 10px;
 
   }
