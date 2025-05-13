@@ -55,7 +55,7 @@
   }
 
 
-  
+
 
   .app-footer {
     grid-area: footer;
@@ -64,7 +64,7 @@
     margin-bottom: 50px;
     background-color: white;
 
-    .footer-nav ul {
+    nav ul {
       @include horizontal-list();
     }
   }
